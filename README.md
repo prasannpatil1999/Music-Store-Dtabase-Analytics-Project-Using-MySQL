@@ -215,214 +215,298 @@ limit 1;
   
 -- TASK 6: Write query to return the email, first name, last name, & Genre of all Rock Music listeners?
 ````sql
-select category,count(*)
-from menu_items
-group by category
+select DISTINCT first_name, last_name, email,g.name
+from customer c join invoice i on  c.customer_id = i.customer_id
+join invoice_line il on  i.invoice_id = il.invoice_id
+join track t on  il.track_id = t.track_id
+join genre g on  t.genre_id = g.genre_id
+where g.name LIKE "Rock%"
+order by email 
 ````
 **Results:**
- Cuisine   | Items Sold | 
------------|------------|
- American  | 6          | 
- Asian     | 8          | 
- Mexican   | 9          | 
- Italian   | 9          | 
+| First Name | Last Name  | Email                          | Genre |
+|------------|-----------|--------------------------------|-------|
+| Aaron      | Mitchell  | aaronmitchell@yahoo.ca        | Rock  |
+| Alexandre  | Rocha     | alero@uol.com.br              | Rock  |
+| Astrid     | Gruber    | astrid.gruber@apple.at        | Rock  |
+| Bjørn      | Hansen    | bjorn.hansen@yahoo.no         | Rock  |
+| Camille    | Bernard   | camille.bernard@yahoo.fr      | Rock  |
+| Daan       | Peeters   | daan_peeters@apple.be        | Rock  |
+| Diego      | Gutiérrez | diego.gutierrez@yahoo.ar      | Rock  |
+| Dan        | Miller    | dmiller@comcast.com           | Rock  |
+| Dominique  | Lefebvre  | dominiquelefebvre@gmail.com   | Rock  |
+| Edward     | Francis   | edfrancis@yachoo.ca          | Rock  |
+| Eduardo    | Martins   | eduardo@woodstock.com.br      | Rock  |
+| Ellie      | Sullivan  | ellie.sullivan@shaw.ca        | Rock  |
+| Emma       | Jones     | emma_jones@hotmail.com        | Rock  |
+| Enrique    | Muñoz     | enrique_munoz@yahoo.es        | Rock  |
+| Fernanda   | Ramos     | fernadaramos4@uol.com.br      | Rock  |
+| Frank      | Harris    | fharris@google.com           | Rock  |
+| Frank      | Ralston   | fralston@gmail.com           | Rock  |
+| František  | Wichterlová | frantisekw@jetbrains.com    | Rock  |
+| François   | Tremblay  | ftremblay@gmail.com          | Rock  |
+| Fynn       | Zimmermann| fzimmermann@yahoo.de         | Rock  |
+| Hannah     | Schneider | hannah.schneider@yahoo.de    | Rock  |
+| Helena     | Holý      | hholy@gmail.com              | Rock  |
+| Heather    | Leacock   | hleacock@gmail.com           | Rock  |
+| Hugh       | O'Reilly  | hughoreilly@apple.ie         | Rock  |
+| Isabelle   | Mercier   | isabelle_mercier@apple.fr    | Rock  |
+| Jack       | Smith     | jacksmith@microsoft.com      | Rock  |
+| Jennifer   | Peterson  | jenniferp@rogers.ca          | Rock  |
+| João       | Fernandes | jfernandes@yahoo.pt         | Rock  |
+| Joakim     | Johansson | joakim.johansson@yahoo.se    | Rock  |
+| Johannes   | Van der Berg | johavanderberg@yahoo.nl  | Rock  |
+| John       | Gordon    | johngordon22@yahoo.com       | Rock  |
+| Julia      | Barnett   | jubarnett@gmail.com         | Rock  |
+| Kathy      | Chase     | kachase@hotmail.com         | Rock  |
+| Kara       | Nielsen   | kara.nielsen@jubii.dk       | Rock  |
+| Ladislav   | Kovács    | ladislav_kovacs@apple.hu    | Rock  |
+| Leonie     | Köhler    | leonekohler@surfeu.de       | Rock  |
+| Lucas      | Mancini   | lucas.mancini@yahoo.it      | Rock  |
+| Luís       | Gonçalves | luisg@embraer.com.br        | Rock  |
+| Luis       | Rojas     | luisrojas@yahoo.cl          | Rock  |
+| Manoj      | Pareek    | manoj.pareek@rediff.com     | Rock  |
+| Marc       | Dubois    | marc.dubois@hotmail.com     | Rock  |
+| Mark       | Taylor    | mark.taylor@yahoo.au       | Rock  |
+| Martha     | Silk      | marthasilk@gmail.com       | Rock  |
+| Madalena   | Sampaio   | masampaio@sapo.pt         | Rock  |
+| Mark       | Philips   | mphilips12@shaw.ca        | Rock  |
+| Niklas     | Schröder  | nschroder@surfeu.de       | Rock  |
+| Patrick    | Gray      | patrick.gray@aol.com      | Rock  |
+| Phil       | Hughes    | phil.hughes@gmail.com     | Rock  |
+| Richard    | Cunningham| ricunningham@hotmail.com  | Rock  |
+| Rishabh    | Mishra    | rishabh_mishra@yahoo.in   | Rock  |
+| Robert     | Brown     | robbrown@shaw.ca         | Rock  |
+| Roberto    | Almeida   | roberto.almeida@riotur.gov.br | Rock  |
+| Stanisław  | Wójcik    | stanisław.wójcik@wp.pl   | Rock  |
+| Steve      | Murray    | steve.murray@yahoo.uk    | Rock  |
+| Terhi      | Hämäläinen | terhi.hamalainen@apple.fi | Rock  |
+| Tim        | Goyer     | tgoyer@apple.com        | Rock  |
+| Victor     | Stevens   | vstevens@yahoo.com      | Rock  |
+| Wyatt      | Girard    | wyatt.girard@yahoo.fr   | Rock  |
   
 -- TASK 7: Let's invite the artists who have written the most rock music in our dataset?
 ````sql
-sselect category,count(*),avg(price)
-from menu_items
-group by category
+-- Top 10 Rock Band
+select a.name,count(a.artist_id) as no_of_rocks_written
+from artist a join album2 alb on  a.artist_id = alb.artist_id
+join track t on  alb.album_id = t.album_id
+join genre g on  t.genre_id = g.genre_id
+where g.name LIKE "Rock%"
+group by a.name
+order by no_of_rocks_written desc
+limit 10
 ````
 **Results:**
-  
- Cuisine   | Items Sold | Average Price (USD) |
------------|------------|---------------------|
- American  | 6          | 10.07               |
- Asian     | 8          | 13.48               |
- Mexican   | 9          | 11.80               |
- Italian   | 9          | 16.75               |
+| Artist Name                        | Number of Rock Songs |
+|-------------------------------------|----------------------|
+| AC/DC                               | 18                   |
+| Aerosmith                           | 15                   |
+| Audioslave                          | 14                   |
+| Led Zeppelin                        | 14                   |
+| Alanis Morissette                   | 13                   |
+| Alice In Chains                     | 12                   |
+| BackBeat                             | 12                   |
+| Frank Zappa & Captain Beefheart     | 9                    |
+| Accept                              | 4                    |
 
 -- TASK 8:Return all the track names that have a song length longer than the average song length?
 ````sql
-select *
-from order_details
+--  Return the Name and Milliseconds for each track?
+-- Order by the song length with the longest songs listed first?
+
+select name,milliseconds
+from track
+where milliseconds > (select avg(milliseconds) as average_song_length from track)
+order by milliseconds desc
 ````
 **Results:**
-- Selects entire order_details table in result
- 
+- We got 143 track names that have a song length longer than the average song length
+- Here glimpse of top 10
+
+ | Song Name                                       | Duration (Milliseconds) |
+|------------------------------------------------|------------------------|
+| How Many More Times                            | 711836                 |
+| Advance Romance                                | 677694                 |
+| Sleeping Village                               | 644571                 |
+| You Shook Me(2)                                | 619467                 |
+| Talkin' 'Bout Women Obviously                  | 589531                 |
+| Stratus                                        | 582086                 |
+| No More Tears                                  | 555075                 |
+| The Alchemist                                  | 509413                 |
+| Wheels Of Confusion / The Straightener        | 494524                 |
+| Book Of Thel                                   | 494393                 |
+
 -- TASK 9: Find how much amount spent by each customer on artists? Write a query to return customer name, artist name and total spent?
 ````sql
--- max date
-select  max(order_date)
-from order_details
--- OR this way
-select  *
-from order_details
-order by order_date desc
+-- Total amount_spent is 122.7599, we will write another wuery to get records of how we got this total
+select  a.artist_id, a.name, SUM(il.unit_price*il.quantity) AS amount_spent
+from customer c join invoice i on  c.customer_id = i.customer_id
+join invoice_line il on  i.invoice_id = il.invoice_id
+join track t on  il.track_id = t.track_id
+join album2 al on  t.album_id = al.album_id
+join artist a on  al.artist_id = a.artist_id
+group by  a.artist_id,a.name
+order by amount_spent desc
+limit 1
 
--- min date
-select  min(order_date)
-from order_details
--- OR this way
-select  *
-from order_details
-order by order_date
+-- create a CTE
+select  a.artist_id, a.name, SUM(il.unit_price*il.quantity) AS amount_spent
+from customer c join invoice i on  c.customer_id = i.customer_id
+join invoice_line il on  i.invoice_id = il.invoice_id
+join track t on  il.track_id = t.track_id
+join album2 al on  t.album_id = al.album_id
+join artist a on  al.artist_id = a.artist_id
+group by  a.artist_id,a.name
+order by amount_spent desc
+limit 1
 ````
 **Results:**
-Max order date|
----------------------|
- 2023-03-31      |
- 
-Min order date|
----------------------|
-2023-01-01      |
+- gets us 41 records
+- Top 10 of those records
+
+  Customer ID | First Name  | Last Name  | Artist Name | Amount Spent |
+|-------------|------------|------------|-------------|--------------|
+| 54          | Steve      | Murray     | AC/DC       | 17.82        |
+| 53          | Phil       | Hughes     | AC/DC       | 10.89        |
+| 21          | Kathy      | Chase      | AC/DC       | 10.89        |
+| 49          | Stanisław  | Wójcik     | AC/DC       | 9.90         |
+| 1           | Luís       | Gonçalves  | AC/DC       | 7.92         |
+| 24          | Frank      | Ralston    | AC/DC       | 7.92         |
+| 31          | Martha     | Silk       | AC/DC       | 3.96         |
+| 16          | Frank      | Harris     | AC/DC       | 2.97         |
+| 42          | Wyatt      | Girard     | AC/DC       | 2.97         |
+| 6           | Helena     | Holý       | AC/DC       | 2.97         |
   
 -- TASK 10: We want to find out the most popular music Genre for each country?
 ````sql
-select  count(distinct(order_id))
-from order_details
+-- Initial Query
+WITH popular_genre AS 
+(
+select billing_country, g.name, g.genre_id, count(quantity) no_of_purchases,
+ROW_NUMBER() OVER(PARTITION BY i.billing_country ORDER BY COUNT(il.quantity) DESC) AS RowNo 
+from invoice i join invoice_line il on  i.invoice_id = il.invoice_id
+join track t on  il.track_id = t.track_id
+join genre g on  t.genre_id = g.genre_id
+group by billing_country, g.name, g.genre_id
+order by i.billing_country asc, no_of_purchases desc
+)
+SELECT * FROM popular_genre WHERE RowNo <= 1
+
 ````
 **Results:**
-orders were made within date range|
----------------------|
-5370    |
+| Billing Country     | Genre  | Genre ID | No. of Purchases | Row Rank |
+|---------------------|--------|----------|------------------|----------|
+| Argentina          | Rock   | 1        | 1                | 1        |
+| Australia         | Rock   | 1        | 18               | 1        |
+| Austria           | Rock   | 1        | 6                | 1        |
+| Belgium           | Rock   | 1        | 5                | 1        |
+| Brazil           | Rock   | 1        | 26               | 1        |
+| Canada           | Rock   | 1        | 57               | 1        |
+| Chile            | Rock   | 1        | 7                | 1        |
+| Czech Republic   | Rock   | 1        | 14               | 1        |
+| Denmark         | Rock   | 1        | 6                | 1        |
+| Finland         | Rock   | 1        | 6                | 1        |
+| France          | Rock   | 1        | 26               | 1        |
+| Germany         | Rock   | 1        | 28               | 1        |
+| Hungary         | Rock   | 1        | 4                | 1        |
+| India           | Rock   | 1        | 13               | 1        |
+| Ireland         | Rock   | 1        | 2                | 1        |
+| Italy          | Rock   | 1        | 3                | 1        |
+| Netherlands     | Rock   | 1        | 6                | 1        |
+| Norway         | Metal  | 3        | 2                | 1        |
+| Poland         | Rock   | 1        | 14               | 1        |
+| Portugal       | Rock   | 1        | 23               | 1        |
+| Spain         | Metal  | 3        | 4                | 1        |
+| Sweden        | Rock   | 1        | 5                | 1        |
+| United Kingdom | Rock   | 1        | 47               | 1        |
+| USA           | Rock   | 1        | 70               | 1        |
 
 -- TASK 11: Write a query that determines the customer that has spent the most on music for each country?
 ````sql
-select  count(item_id)
-from order_details
-````
-**Results:**
-items  ordered within date range|
----------------------|
-12097  |
-  
--- TASK 12: Which order had the most no of items?
-````sql
-select  order_id, count(item_id) as no_of_items
-from order_details
-group by order_id
-order by no_of_items desc
-````
-**Results:**
-Order ID   | No of items |
------------|------------|
- 4305  | 14          | 
-  
--- TASK 13: How many Orders have more than 12 items?
-````sql
-select count(*)
-from  (select  order_id, count(item_id) as no_of_items
-from order_details
-group by order_id
-having no_of_items > 12
-order by no_of_items desc) as no_of_items_ordered_above_12
-````
-**Results:**
-Count|
----------------------|
-20  |
-  
--- TASK 14: What is the average dish price  within each category?
-````sql
-select category,count(*),avg(price)
-from menu_items
-group by category
-````
-**Results:**
- Cuisine   | Items Sold | Average Price (USD) |
------------|------------|---------------------|
- American  | 6          | 10.07               |
- Asian     | 8          | 13.48               |
- Mexican   | 9          | 11.80               |
- Italian   | 9          | 16.75               |
+-- 1st way
+WITH customer_spending AS (
+    SELECT c.country,c.customer_id,c.first_name,c.last_name,SUM(il.unit_price * il.quantity) AS total_spent
+    FROM customer c JOIN invoice i ON c.customer_id = i.customer_id
+	JOIN invoice_line il ON i.invoice_id = il.invoice_id
+    GROUP BY c.country, c.customer_id,c.first_name,c.last_name
+),
+ranked_customers AS (
+	SELECT country,customer_id,first_name,last_name,total_spent,
+	RANK() OVER (PARTITION BY country ORDER BY total_spent DESC) AS spending_rank
+    FROM customer_spending
+)
+SELECT country,CONCAT(first_name, ' ', last_name) AS top_customer,total_spent
+FROM ranked_customers
+WHERE spending_rank = 1
+ORDER BY country;
 
-
--- TASK15: Combine menu_items and oredr_details tables into one single table?
-````sql
-select *
- from order_details od
-join menu_items mi
-on od.item_id = mi.menu_item_id
+-- 2nd way
+WITH customer_spending AS (
+    SELECT c.country,c.customer_id,c.first_name,c.last_name,SUM(il.unit_price * il.quantity) AS total_spent,
+    RANK() OVER (PARTITION BY country ORDER BY SUM(il.unit_price * il.quantity) DESC) AS spending_rank
+    FROM customer c JOIN invoice i ON c.customer_id = i.customer_id
+	JOIN invoice_line il ON i.invoice_id = il.invoice_id
+    GROUP BY c.country, c.customer_id,c.first_name,c.last_name
+)
+SELECT *
+FROM customer_spending
+WHERE spending_rank = 1
+ORDER BY country;
 ````
 **Results:**
-
-- We got single table which is result of mix of menu_items and oredr_details tables 
+| Country          | Customer ID | First Name  | Last Name       | Total Spent            | Spending Rank |
+|-----------------|-------------|------------|----------------|------------------------|---------------|
+| Argentina       | 56          | Diego      | Gutiérrez      | 39.60                  | 1             |
+| Australia      | 55          | Mark       | Taylor         | 81.18                  | 1             |
+| Austria        | 7           | Astrid     | Gruber         | 69.30                  | 1             |
+| Belgium        | 8           | Daan       | Peeters        | 60.39                  | 1             |
+| Brazil        | 1           | Luís       | Gonçalves      | 108.90                 | 1             |
+| Canada        | 3           | François   | Tremblay       | 99.99                  | 1             |
+| Chile         | 57          | Luis       | Rojas          | 97.02                  | 1             |
+| Czech Republic | 5           | František  | Wichterlová    | 144.54                 | 1             |
+| Denmark       | 9           | Kara       | Nielsen        | 37.62                  | 1             |
+| Finland       | 44          | Terhi      | Hämäläinen     | 79.20                  | 1             |
+| France        | 42          | Wyatt      | Girard         | 99.99                  | 1             |
+| Germany       | 37          | Fynn       | Zimmermann     | 94.05                  | 1             |
+| Hungary       | 45          | Ladislav   | Kovács         | 78.21                  | 1             |
+| India         | 58          | Manoj      | Pareek         | 111.87                 | 1             |
+| Ireland       | 46          | Hugh       | O'Reilly       | 114.84                 | 1             |
+| Italy         | 47          | Lucas      | Mancini        | 50.49                  | 1             |
+| Netherlands   | 48          | Johannes   | Van der Berg   | 65.34                  | 1             |
+| Norway        | 4           | Bjørn      | Hansen         | 72.27                  | 1             |
+| Poland        | 49          | Stanisław  | Wójcik         | 76.23                  | 1             |
+| Portugal      | 34          | João       | Fernandes      | 102.96                 | 1             |
+| Spain         | 50          | Enrique    | Muñoz         | 98.01                  | 1             |
+| Sweden        | 51          | Joakim     | Johansson      | 75.24                  | 1             |
+| United Kingdom | 53          | Phil       | Hughes        | 98.01                  | 1             |
+| USA           | 17          | Jack       | Smith         | 98.01                  | 1             |
   
--- TASK16: What were the least and most ordered items. What categories were  they in?
-````sql
-select item_name,category ,count(item_id) as count_of_items
-from order_details od
-join menu_items mi
-on od.item_id = mi.menu_item_id
-group by item_name, category
-order by count_of_items desc
-````
-**Results:**
-
-Item name   | Category | count of items |
------------|------------|---------------------|
- Hamburger  | American          | 622               |
- Chicken Tacos   | Mexican       | 123            |
- 
--- TASK17: What were the top 5 orders that spent most money?
-````sql
-select order_id,sum(price) as total_price
-from order_details od
-join menu_items mi
-on od.item_id = mi.menu_item_id
-group by order_id
-order by total_price desc
-limit 5
-````
-**Results:**
- order_id | total_price (USD) |
-----------|------------------|
- 440      | 192.15           |
- 2075     | 191.05           |
- 1957     | 190.10           |
- 330      | 189.70           |
- 2675     | 185.10           |
-  
--- TASK18: View the details of the highest spend order. What insights you can gather from?
-````sql
--- Checking for insights
-select category,count(order_id)
-from order_details od
-join menu_items mi
-on od.item_id = mi.menu_item_id
-where order_id = 440
-group by category
-````
-**Results:**
-
-- He has spent most of his money on Italian dishes
-  
--- TASK19: View the details of the Top 5 hignest spend order. What insights you can gather from?
-````sql
--- Checking for insights
-select category,count(order_id)
-from order_details od
-join menu_items mi
-on od.item_id = mi.menu_item_id
-where order_id in (440,2075,1957,330,2675)
-group by category
-````
-**Results:**
-
-- Top 5 hignest spendrs have spent most of their money on Italian dishes
 
 
 ### Recommendations
-- Expand the Italian Menu: Since the highest-spending orders are dominated by Italian dishes, consider adding new Italian dishes or premium options.
-- Promote High-Selling Items: The Hamburger (American) and Chicken Tacos (Mexican) are the most ordered items—promoting them with combo deals or upsell strategies can increase revenue.
-- Analyze Low-Selling Items: Identify and improve or remove menu items with low sales to optimize the menu.
-- Optimize Pricing Strategy: With Italian dishes having the highest average price, introducing mid-range Italian options may attract more customers.
-- Enhance Order Size Growth: Since some orders contain over 12 items, encourage group or family meal deals to increase the average order size.
-- Target High-Spending Customers: Create loyalty programs or discounts for repeat high-value customers, especially those ordering Italian cuisine frequently.
+- Senior Leadership: Retain and leverage Adams Andrew’s experience as the most senior employee.
+
+- Invoice Strategy: Focus on USA, Canada, and Brazil, as they generate the most invoices.
+
+-  High-Value Invoices: Target customers with a history of high invoice totals to increase revenue.
+
+- Best Customer Location: Organize promotions and events in Prague, the highest revenue-generating city.
+
+- Top-Spending Customer: Engage Customer ID 5 with loyalty programs to encourage repeat business.
+
+- Rock Music Listeners: Target personalized promotions for identified Rock music listeners.
+
+- Artist Invitations: Prioritize AC/DC, Aerosmith, and Audioslave for rock music events.
+
+- Long Songs Promotion: Highlight longer-than-average songs in curated playlists or premium features.
+
+- Customer Spending on Artists: Focus on AC/DC, as they generate the highest revenue.
+
+- Popular Genre per Country: Tailor music recommendations by country, especially Rock in key regions.
 
 ### Conclusion
-The Restaurant Order Data Analysis provides valuable insights into customer preferences, sales trends, and menu performance. Italian dishes emerge as the most popular and highest-grossing category, indicating a strong demand. Optimizing the menu by expanding high-selling items, adjusting pricing strategies, and promoting group deals can enhance revenue. Implementing targeted marketing and loyalty programs for frequent high-spending customers can further boost profitability.
+The analysis highlights key areas for business growth, including customer engagement, strategic marketing, and revenue optimization. Targeting high-value customers, leveraging location-based insights, and personalizing music recommendations can enhance sales. Additionally, promoting popular artists and genres per region will drive better customer satisfaction and retention. Implementing these strategies will help maximize revenue and strengthen market position.
 
 ### Author
 - Prasannagoud Patil
