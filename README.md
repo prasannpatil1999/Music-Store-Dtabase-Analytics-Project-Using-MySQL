@@ -365,7 +365,7 @@ limit 1
 - gets us 41 records
 - Top 10 of those records
 
-  Customer ID | First Name  | Last Name  | Artist Name | Amount Spent |
+ |Customer ID | First Name  | Last Name  | Artist Name | Amount Spent |
 |-------------|------------|------------|-------------|--------------|
 | 54          | Steve      | Murray     | AC/DC       | 17.82        |
 | 53          | Phil       | Hughes     | AC/DC       | 10.89        |
